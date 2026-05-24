@@ -1,6 +1,6 @@
 # TG-Download-Bot
 
-Telegram bot for magnet/AV download management via [Gopeed](https://github.com/GopeedLab/gopeed) with AI classification, poster fetching, and movie search.
+Telegram download bot powered by [Gopeed](https://github.com/GopeedLab/gopeed) with AI classification, poster fetching, and intelligent routing.
 
 ## Workflow
 
@@ -9,7 +9,6 @@ flowchart TD
     U[User sends message]
     C{Classify}
     GP[Gopeed API]
-    SV[Sukebei Search]
     HG[HGME Search]
     DL[Download Pipeline]
     AI{AI Analysis}
@@ -18,9 +17,7 @@ flowchart TD
 
     U --> C
     C -->|Magnet| GP
-    C -->|AV Number| SV
     C -->|Movie/TV| HG
-    SV --> GP
     HG --> GP
     GP --> DL
     DL -->|Done| AI
@@ -32,10 +29,10 @@ flowchart TD
 
 ## Features
 
-- **Input auto-classify** — magnet links, AV numbers, movie/TV show names
+- **Input auto-classify** — magnet links, movie/TV show names, and more
 - **AI analysis** — OpenAI/Anthropic-compatible API to identify content type and clean name
-- **Smart download** — auto-routes AV to AV directory, movies/TV to media directory
-- **Poster fetching** — TMDB for movies, Javbus/AVMoo for AV
+- **Smart download** — auto-routes content to configured directories
+- **Poster fetching** — TMDB for movies
 - **Progress tracking** — real-time download progress bar via inline message updates
 - **HGME search** — Chinese-subtitle torrent search for movies/TV shows
 - **Web config UI** — Flask-based configuration panel (port 9099)
@@ -98,7 +95,7 @@ Set via `config.env` or environment variables:
 | `PROXY_URL` | HTTP proxy for Telegram API |
 | `GOPEED_URL` | Gopeed REST API URL (default: `http://127.0.0.1:9999`) |
 | `GOPEED_TOKEN` | Gopeed API Token (`X-Api-Token` header) |
-| `AV_DEST` | Download directory for AV |
+| `AV_DEST` | Download directory one |
 | `BT_DEST` | Download directory for movies/TV |
 | `AI_API_URL` | OpenAI/Anthropic compatible API URL |
 | `AI_API_KEY` | AI API key |
