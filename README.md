@@ -9,6 +9,7 @@ Telegram bot for magnet/AV download management via [Gopeed](https://github.com/G
 config:
   theme: base
   themeVariables:
+    fontSize: 28px
     primaryColor: "#1a73e8"
     primaryTextColor: "#fff"
     lineColor: "#5f6368"
