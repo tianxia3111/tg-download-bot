@@ -34,7 +34,7 @@ flowchart TD
 - **Smart download** — auto-routes content to configured directories
 - **Poster fetching** — TMDB for movies
 - **Progress tracking** — real-time download progress bar via inline message updates
-- **HGME search** — Chinese-subtitle torrent search for movies/TV shows
+- **HGME search** — Chinese resource search for movies/TV shows
 - **Web config UI** — Flask-based configuration panel (port 9099)
 
 ## Requirements
@@ -100,6 +100,6 @@ Set via `config.env` or environment variables:
 | `AI_API_URL` | OpenAI/Anthropic compatible API URL |
 | `AI_API_KEY` | AI API key |
 | `AI_MODEL` | AI model name |
-| `HGME_ENABLED` | Enable HGME Chinese-sub search |
+| `HGME_ENABLED` | Enable HGME Chinese resource search |
 | `HGME_USERNAME` | HGME account username |
 | `HGME_PASSWORD` | HGME account password |
