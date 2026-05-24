@@ -22,7 +22,7 @@ flowchart TD
     AV([Sukebei Search])
     GP[[Gopeed Downloader]]
     CR[Create Task<br/>POST /api/v1/tasks]
-    MD[Wait Metadata<br/>GET /api/v1/tasks/{id}]
+    MD[Wait Metadata<br/>GET /api/v1/tasks/id]
     FL[Filter Junk Files]
     PO[Poll Progress]
     AI{AI Analysis}
