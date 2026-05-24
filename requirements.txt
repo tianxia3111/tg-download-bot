@@ -1,0 +1,7 @@
+python-telegram-bot
+requests
+beautifulsoup4
+lxml
+flask
+playwright==1.52.0
+cloudscraper

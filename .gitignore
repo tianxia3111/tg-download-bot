@@ -1,0 +1,17 @@
+# Sensitive config
+config.env
+
+# Runtime data
+data/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Trellis
+.trellis/
+
+# IDE
+.vscode/
+.idea/

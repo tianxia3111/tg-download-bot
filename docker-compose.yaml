@@ -1,0 +1,21 @@
+services:
+  bot:
+    image: tg-download-bot:latest
+    build: .
+    container_name: TG-DOWNLOAD-BOT
+    network_mode: host
+    volumes:
+      - ./data:/app/data
+      - ./config.env:/app/config.env
+      - /volume2/video2:/video2
+      - /volume3/video3:/video3
+      - /volume4/video4:/video4
+      - /volume5/video5:/video5
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    env_file:
+      - config.env
