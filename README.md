@@ -5,35 +5,51 @@ Telegram bot for magnet/AV download management via [Gopeed](https://github.com/G
 ## Workflow
 
 ```mermaid
-flowchart TD
-    User -->|sends text| classify
-    
-    subgraph classify [Input Classification]
-        direction LR
-        magnet[Magnet Link] --> download
-        av[AV Number] --> search_sukebei[Sukebei Search]
-        search_sukebei --> download
-        movie[Movie/TV Name] --> hgme[HGME Search]
-        hgme -->|user selects| download
-    end
-    
-    subgraph download [Download Pipeline]
-        direction TB
-        submit[Submit to Gopeed API] --> metadata[Wait for Metadata]
-        metadata --> filter[Filter Junk Files]
-        filter --> poll[Poll Progress]
-    end
-    
-    subgraph ai [AI Analysis]
-        poster[Fetch Poster<br/>TMDB / Javbus] --> send[Send Photo to Telegram]
-    end
-    
-    download --> ai
-    poll -->|complete| notify[Notify User]
+---
+config:
+  theme: base
+  themeVariables:
+    primaryColor: "#1a73e8"
+    primaryTextColor: "#fff"
+    lineColor: "#5f6368"
+    secondaryColor: "#e8f0fe"
+    tertiaryColor: "#f8f9fa"
+---
+flowchart LR
+    U([👤 User]) -->|sends message| C{Classify}
 
-    style User fill:#e1f5fe
-    style notify fill:#c8e6c9
-    style send fill:#fff3e0
+    C -->|🔗 Magnet| AP[Gopeed API]
+    C -->|🔞 AV Number| AV[Search Sukebei]
+    C -->|🎬 Movie/TV| HG[HGME Search]
+
+    AV --> AP
+    HG -->|user picks| AP
+
+    subgraph GP [Gopeed Downloader]
+        direction TB
+        AP -->|POST /api/v1/tasks| CR[Create Task]
+        CR --> MD[Wait Metadata]
+        MD --> FL[Filter Files]
+        FL --> PO[Poll Progress]
+    end
+
+    GP --> AI{AI Analysis}
+    AI -->|🎞 Movie| TM[TMDB Poster]
+    AI -->|🔞 AV| JB[Javbus Poster]
+    TM --> PH([📸 Send Photo])
+    JB --> PH
+
+    PO -->|✅ done| ED([✅ Notify User])
+    PO -->|❌ error| EF([❌ Show Error])
+
+    style U fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#1565c0
+    style C fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100
+    style AP fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
+    style GP fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c
+    style AI fill:#fff8e1,stroke:#f9a825,color:#e65100
+    style PH fill:#e3f2fd,stroke:#1565c0,color:#1565c0
+    style ED fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
+    style EF fill:#ffebee,stroke:#c62828,color:#b71c1c
 ```
 
 ## Features
