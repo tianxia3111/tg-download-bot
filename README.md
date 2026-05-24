@@ -5,61 +5,30 @@ Telegram bot for magnet/AV download management via [Gopeed](https://github.com/G
 ## Workflow
 
 ```mermaid
----
-config:
-  theme: base
-  themeVariables:
-    primaryColor: "#1a73e8"
-    primaryTextColor: "#fff"
-    lineColor: "#5f6368"
-    secondaryColor: "#e8f0fe"
-    tertiaryColor: "#f8f9fa"
----
 flowchart TD
-    U([👤 User])
-    C{Classify Input}
-    HG([HGME Search])
-    AV([Sukebei Search])
-    GP[[Gopeed Downloader]]
-    CR[Create Task<br/>POST /api/v1/tasks]
-    MD[Wait Metadata<br/>GET /api/v1/tasks/id]
-    FL[Filter Junk Files]
-    PO[Poll Progress]
+    U[User sends message]
+    C{Classify}
+    GP[Gopeed API]
+    SV[Sukebei Search]
+    HG[HGME Search]
+    DL[Download Pipeline]
     AI{AI Analysis}
-    TM[TMDB Poster]
-    JB[Javbus Poster]
-    PH([📸 Send Photo])
-    ED([✅ Notify User])
-    EF([❌ Show Error])
+    OK[Notify Complete]
+    ER[Show Error]
 
-    U -->|sends message| C
-    C -->|🔗 Magnet| GP
-    C -->|🔞 AV Number| AV
-    C -->|🎬 Movie/TV| HG
-    HG -->|user selects| GP
-    AV --> GP
-    GP --> CR --> MD --> FL --> PO
-    PO -->|running| PO
-    PO -->|done| AI
-    PO -->|error| EF
-    AI -->|🎞 Movie| TM
-    AI -->|🔞 AV| JB
-    TM --> PH
-    JB --> PH
-    PO -->|done| ED
-
-    style U fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#1565c0
-    style C fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100
-    style GP fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c
-    style AI fill:#fff8e1,stroke:#f9a825,color:#e65100
-    style PH fill:#e3f2fd,stroke:#1565c0,color:#1565c0
-    style ED fill:#e8f5e9,stroke:#2e7d32,color:#1b5e20
-    style EF fill:#ffebee,stroke:#c62828,color:#b71c1c
-    style CR fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
-    style MD fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
-    style FL fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
-    style PO fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
+    U --> C
+    C -->|Magnet| GP
+    C -->|AV Number| SV
+    C -->|Movie/TV| HG
+    SV --> GP
+    HG --> GP
+    GP --> DL
+    DL -->|Done| AI
+    DL -->|Error| ER
+    AI --> OK
 ```
+
+
 
 ## Features
 
